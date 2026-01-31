@@ -1,0 +1,33 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "modules": [
+    "title",
+    {
+      "type": "title",
+      "format": "\\\/\\\/\\\/\\\\/\\/\\/"
+    },
+    "separator",
+    "os",
+    "kernel",
+    "uptime",
+    "packages",
+    "shell",
+    {
+      "type": "command",
+      "key": "DE | WM",
+      "text": "de=${XDG_CURRENT_DESKTOP:-${DESKTOP_SESSION}}; wm=$(ps -e | awk '/kwin|mutter|sway|i3|openbox|xfwm4|river|hyprland|wlroots/ {print $4; exit}'); de_pretty=$(echo \"$de\" | sed -E 's/(GNOME).*/GNOME/;s/(KDE|PLASMA).*/KDE Plasma/;s/(XFCE|Xfce).*/Xfce/;s/(LXQt|LXDE).*/LXQt/;s/(Hyprland).*/Hyprland/;s/(sway).*/Sway/;s/(i3).*/i3/;s/(Openbox).*/Openbox/;s/(river).*/River/'); wm_pretty=$(echo \"$wm\" | sed -E 's/_wayland//;s/^./\\U&/'); printf '%s / %s' \"$de_pretty\" \"$wm_pretty\""
+    },
+    "terminal",
+       "break",
+ "cpu",
+    "gpu",
+      "break",
+  "memory",
+     "break",
+   "swap",
+    "disk",
+    "break",
+    "break"
+  ]
+}
+
