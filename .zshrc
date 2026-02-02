@@ -15,6 +15,7 @@ bindkey -v
 
 alias xc="xclip -selection clipboard"
 alias ls='ls -G'
+alias sudo=doas
 alias ll='ls -alG'
 alias dotfiles='cd ~/.dotfiles'
 alias reload='source ~/.zshrc'
