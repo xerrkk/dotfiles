@@ -6,7 +6,7 @@ if (( $+commands[emacs] )); then
     pgrep -u "$USER" -x emacs >/dev/null 2>&1 || emacs --daemon &
     alias vi='emacsclient -c'
     alias vim='emacsclient -c'
-    alias nvim='emacsclient c'
+    alias nvim='emacsclient -c'
     alias e='emacsclient -c'
     alias v='emacsclient -c'
 fi
