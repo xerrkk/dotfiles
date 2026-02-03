@@ -1,27 +1,35 @@
-export PATH=$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
-export EDITOR="emacsclient -c"
-PROMPT='%F{cyan}%~%f $ '
-pgrep -u "$USER" -x emacs 2>/dev/null || emacs --daemon
+export PATH=$HOME/bin:$HOME/.local/bin:/opt/local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
+# 2. Check if Emacs exists before setting it as Editor/Daemon
+if (( $+commands[emacs] )); then
+    export EDITOR="emacsclient -c"
+    pgrep -u "$USER" -x emacs >/dev/null 2>&1 || emacs --daemon &
+    
+    # Only alias these if you really want to force Emacs
+    alias e='emacsclient -c'
+    alias v='emacsclient -c'
+fi
+
+# 3. Standard Shell Behavior
+PROMPT='%F{cyan}%~%f $ '
 HISTFILE=~/.zsh_history
 HISTSIZE=5000
 SAVEHIST=5000
-setopt SHARE_HISTORY         # Share history between sessions
-setopt HIST_IGNORE_DUPS      # Don't record same command twice
-setopt HIST_IGNORE_SPACE     # Don't record commands starting with a space
-
-setopt AUTO_CD               # Just type the directory name to go there
+setopt SHARE_HISTORY HIST_IGNORE_DUPS HIST_IGNORE_SPACE AUTO_CD
 bindkey -v
 
+# 4. Safer Aliases
 alias xc="xclip -selection clipboard"
 alias ls='ls -G'
-alias sudo=doas
 alias ll='ls -alG'
 alias dotfiles='cd ~/.dotfiles'
 alias reload='source ~/.zshrc'
-alias vim='emacsclient -c'
-alias vi='emacsclient -c'
-alias v='emacsclient -c'
-alias e='emacsclient -c'
-source ~/.zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Only alias sudo to doas if doas actually exists
+if (( $+commands[doas] )); then
+    alias sudo=doas
+fi
+
+# 5. Only source plugins if they exist
+[[ -f ~/.zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/.zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
