@@ -4,8 +4,9 @@ export PATH=$HOME/bin:$HOME/.local/bin:/opt/local/bin:/opt/homebrew/bin:/usr/loc
 if (( $+commands[emacs] )); then
     export EDITOR="emacsclient -c"
     pgrep -u "$USER" -x emacs >/dev/null 2>&1 || emacs --daemon &
-    
-    # Only alias these if you really want to force Emacs
+    alias vi='emacsclient -c'
+    alias vim='emacsclient -c'
+    alias nvim='emacsclient c'
     alias e='emacsclient -c'
     alias v='emacsclient -c'
 fi
