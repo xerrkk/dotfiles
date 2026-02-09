@@ -1,5 +1,11 @@
 export PATH=$HOME/bin:$HOME/.local/bin:/opt/local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
+# Neovim
+#
+if (( $+commands[nvim] )); then
+    export EDITOR="nvim"
+fi
+
 # 2. Check if Emacs exists before setting it as Editor/Daemon
 if (( $+commands[emacs] )); then
     export EDITOR="emacsclient -c"
@@ -9,6 +15,11 @@ if (( $+commands[emacs] )); then
     alias nvim='emacsclient -c'
     alias e='emacsclient -c'
     alias v='emacsclient -c'
+fi
+
+# Nix
+if [ -e /usr/local/etc/profile.d/nix.sh ]; then 
+    . /usr/local/etc/profile.d/nix.sh
 fi
 
 # 3. Standard Shell Behavior
