@@ -1,16 +1,32 @@
 export PATH="/home/linuxbrew/.linuxbrew/bin/:$HOME/.nix-profile/bin:$HOME/bin:$HOME/.local/bin:/opt/local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"
 
 # Neovim
-if (( $+commands[nvim] )); then
+d
+:q
+:
+q
+qif (( $+commands[nvim] )); then
     export EDITOR="nvim"
 fi
+
+# 2. Check if Emacs exists before setting it as Editor/Daemon
+if (( $+commands[emacs] )); then
+    export EDITOR="emacsclient -c"
+    pgrep -u "$USER" -x emacs >/dev/null 2>&1 || emacs --daemon &
+    alias vi='emacsclient -c'
+    alias vim='emacsclient -c'
+    alias nvim='emacsclient -c'
+    alias e='emacsclient -c'
+    alias v='emacsclient -c'
+fi
+
 # Nix
 if [ -e /usr/local/etc/profile.d/nix.sh ]; then 
     . /usr/local/etc/profile.d/nix.sh
 fi
 
 # 3. Standard Shell Behavior
-PROMPT='%F{cyan}%~%f $ '
+PROMPT='%F{cyan}%~%f \$ '
 HISTFILE=~/.hist
 HISTSIZE=5000
 SAVEHIST=5000
