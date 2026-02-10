@@ -1,6 +1,4 @@
 #!/bin/sh
-setxkbmap -variant dvorak 
+setxkbmap  -variant dvorak
 xrdb -merge ~/.Xresources
-xrandr --dpi 125
-picom -b
-exec i3
+exec dwm
