@@ -104,20 +104,22 @@ wintypes:
 #################################
 #            Fading             #
 #################################
+# Enable fading for windows.
 fading = true;
 
-# How fast the window fades in (0.01 to 1.0)
-# A higher number is faster.
-fade-in-step = 0.03; 
+# Opacity change between steps while fading in. (0.01 - 1.0, defaults to 0.028)
+fade-in-step = 0.03;
 
-# How fast the window fades out
+# Opacity change between steps while fading out. (0.01 - 1.0, defaults to 0.03)
 fade-out-step = 0.03;
 
-# The time between steps in milliseconds (lower is smoother/faster)
+# The time between steps in milliseconds, in milliseconds. (> 0, defaults to 10)
 fade-delta = 5;
 
-# This is the key for workspaces: 
-# It ensures windows fade when they change state/visibility.
-no-fading-openclose = false;
-no-fading-destroyed-argb = false;
+# Specify a list of conditions of windows that should not be faded.
+fade-exclude = [
+  "class_g = 'slop'"   # Exclude screen snipping tools to prevent flickering
+];
 
+# Do not fade on window open/close.
+# no-fading-openclose = false;
