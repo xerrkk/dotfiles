@@ -8,6 +8,8 @@
   (keyboard-layout (keyboard-layout "us" "dvorak"))
   (host-name "guix")
 
+  (kernel-arguments '("quiet" "i915.modeset=1"))
+
   (users (cons* (user-account
                   (name "xer")
                   (comment "Xer")
@@ -51,4 +53,5 @@
                          (mount-point "/home")
                          (device (uuid "2eb0ea10-cfe3-4f01-9d3e-adc674da858d" 'ext4))
                          (type "ext4")) 
-                       %base-file-systems)))
+                       %base-file-sys
+                       tems)))
