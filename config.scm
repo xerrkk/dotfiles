@@ -1,16 +1,5 @@
-;; This is an operating system configuration generated
-;; by the graphical installer.
-;;
-;; Once installation is complete, you can learn and modify
-;; this file to tweak the system configuration, and pass it
-;; to the 'guix system reconfigure' command to effect your
-;; changes.
-
-
-;; Indicate which modules to import to access the variables
-;; used in this configuration.
 (use-modules (gnu)
-	(gnu packages xorg))
+             (gnu packages xorg))
 (use-service-modules cups desktop networking ssh xorg)
 
 (operating-system
@@ -19,52 +8,47 @@
   (keyboard-layout (keyboard-layout "us" "dvorak"))
   (host-name "guix")
 
-  ;; The list of user accounts ('root' is implicit).
   (users (cons* (user-account
                   (name "xer")
                   (comment "Xer")
                   (group "users")
                   (home-directory "/home/xer")
-                  (supplementary-groups '("tty" "wheel" "netdev" "audio" "video")))
+                  (supplementary-groups '("wheel" "netdev" "audio" "video")))
                 %base-user-accounts))
 
-  ;; Packages installed system-wide.  Users can also install packages
-  ;; under their own account: use 'guix search KEYWORD' to search
-  ;; for packages and 'guix install PACKAGE' to install a package.
   (packages (append (list (specification->package "emacs")
                           (specification->package "emacs-exwm")
-                          (specification->package
-                           "emacs-desktop-environment")) %base-packages))
+                          (specification->package "emacs-desktop-environment")
+                          xf86-video-intel
+                          xf86-video-fbdev
+                          xf86-video-vesa) 
+                    %base-packages))
 
-  ;; Below is the list of system services.  To search for available
-  ;; services, run 'guix system search KEYWORD' in a terminal.
   (services
    (append
-	(list (set-xorg-configuration
-		(xorg-configuration
-			(modules (list xf86-video-intel))
-			(drivers '("intel")))))
-   %desktop-services))
+    (list (set-xorg-configuration
+           (xorg-configuration
+            (drivers '("modesetting" "intel" "fbdev" "vesa"))
+            (modules (list xf86-video-intel 
+                           xf86-video-fbdev 
+                           xf86-video-vesa)))))
+    %desktop-services))
+
   (bootloader (bootloader-configuration
                 (bootloader grub-bootloader)
                 (targets (list "/dev/sda"))
                 (keyboard-layout keyboard-layout)))
+
   (swap-devices (list (swap-space
                         (target (uuid
                                  "daa7aedc-ae8c-43d1-ac42-9878221a4895")))))
 
-  ;; The list of file systems that get "mounted".  The unique
-  ;; file system identifiers there ("UUIDs") can be obtained
-  ;; by running 'blkid' in a terminal.
   (file-systems (cons* (file-system
                          (mount-point "/")
-                         (device (uuid
-                                  "34b3dea9-92df-4695-ad0d-e31cbdce2f35"
-                                  'ext4))
+                         (device (uuid "34b3dea9-92df-4695-ad0d-e31cbdce2f35" 'ext4))
                          (type "ext4"))
                        (file-system
                          (mount-point "/home")
-                         (device (uuid
-                                  "2eb0ea10-cfe3-4f01-9d3e-adc674da858d"
-                                  'ext4))
-                         (type "ext4")) %base-file-systems)))
+                         (device (uuid "2eb0ea10-cfe3-4f01-9d3e-adc674da858d" 'ext4))
+                         (type "ext4")) 
+                       %base-file-systems)))
