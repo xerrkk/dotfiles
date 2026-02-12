@@ -42,6 +42,7 @@
                           (specification->package "hyprlock")
                           (specification->package "hypridle")
                           (specification->package "waybar")
+			  (specification->package "zile")
                           (specification->package "rofi")
                           (specification->package "swaybg")
                           (specification->package "foot")
