@@ -52,11 +52,11 @@
                 (keyboard-layout keyboard-layout)))
 
   (swap-devices (list (swap-space
-                        (target (uuid "daa7aedc-ae8c-43d1-ac42-9878221a4895")))))
+                        (target (uuid "dad41259-ab3f-43a1-93be-11c3ab8ac765")))))
 
   (file-systems (cons* (file-system
                          (mount-point "/")
-                         (device (uuid "34b3dea9-92df-4695-ad0d-e31cbdce2f35" 'ext4))
+                         (device (uuid "16e59feb-4827-4935-b9fd-7e71a2cd6831" 'ext4))
                          (type "ext4"))
                        (file-system
                          (mount-point "/home")
