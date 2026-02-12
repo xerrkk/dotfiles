@@ -1,5 +1,7 @@
+
 (use-modules (gnu)
              (gnu packages xorg)
+             (gnu packages video)
              (gnu packages linux)
              ;; These require the nonguix channel
              (nongnu packages linux)
