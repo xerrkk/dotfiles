@@ -1,7 +1,13 @@
 (use-modules (gnu)
+             (gnu packages admin)
+             (gnu packages base)        
+             (gnu packages commencement) 
+             (gnu packages wm)          
+             (gnu packages terminals)   
              (gnu packages xorg)
              (gnu packages linux)
              (gnu packages video)
+             (gnu packages browsers)    ; Added for IceCat
              (nongnu packages linux)
              (nongnu system linux-initrd))
 
@@ -16,9 +22,7 @@
   (kernel linux)
   (firmware (list linux-firmware))
   (initrd microcode-initrd)
-
-  (kernel-arguments '("quiet" "i915.modeset=1"))
-
+  
   (users (cons* (user-account
                   (name "xer")
                   (comment "Xer")
@@ -27,23 +31,33 @@
                   (supplementary-groups '("wheel" "netdev" "audio" "video")))
                 %base-user-accounts))
 
-  (packages (append (list (specification->package "emacs")
-                          (specification->package "emacs-exwm")
-                          (specification->package "emacs-desktop-environment")
-                          xf86-video-intel
-                          xf86-video-fbdev
-                          xf86-video-vesa
-                          intel-vaapi-driver) 
-                    %base-packages))
+  (packages (append (list 
+                          ;; The Wayland Suite (No Waybar)
+                          (specification->package "sway")
+                          (specification->package "swaybg")
+                          (specification->package "swaylock")
+                          (specification->package "swayidle")
+                          (specification->package "foot")
+                          
+                          ;; The Browser
+                          (specification->package "icecat")
+                          
+                          ;; Dev Tools
+                          (specification->package "make")
+                          (specification->package "binutils")
+                          (specification->package "gcc-toolchain")
+                          
+                          ;; Graphics / Video
+                          (specification->package "libva-utils")
+                          (specification->package "intel-vaapi-driver"))
+                     %base-packages))
 
   (services
    (append
-    (list (set-xorg-configuration
-           (xorg-configuration
-            (drivers '("intel" "modesetting" "fbdev" "vesa"))
-            (modules (list xf86-video-intel 
-                           xf86-video-fbdev 
-                           xf86-video-vesa)))))
+    (list (service screen-locker-service-type
+                   (screen-locker-configuration
+                     (name "swaylock")
+                     (program (file-append swaylock "/bin/swaylock")))))
     %desktop-services))
 
   (bootloader (bootloader-configuration
@@ -61,5 +75,5 @@
                        (file-system
                          (mount-point "/home")
                          (device (uuid "2eb0ea10-cfe3-4f01-9d3e-adc674da858d" 'ext4))
-                         (type "ext4")) 
-                       %base-file-systems)))
+                         (type "ext4"))
+                        %base-file-systems)))
