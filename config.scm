@@ -1,9 +1,7 @@
-
 (use-modules (gnu)
              (gnu packages xorg)
-             (gnu packages video)
              (gnu packages linux)
-             ;; These require the nonguix channel
+             (gnu packages video)
              (nongnu packages linux)
              (nongnu system linux-initrd))
 
@@ -15,7 +13,6 @@
   (keyboard-layout (keyboard-layout "us" "dvorak"))
   (host-name "guix")
 
-  ;; Use the non-free kernel and firmware
   (kernel linux)
   (firmware (list linux-firmware))
   (initrd microcode-initrd)
@@ -36,7 +33,7 @@
                           xf86-video-intel
                           xf86-video-fbdev
                           xf86-video-vesa
-                          libva-intel-driver) 
+                          intel-vaapi-driver) 
                     %base-packages))
 
   (services
