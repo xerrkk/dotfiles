@@ -1,20 +1,23 @@
 (use-modules (gnu)
              (gnu packages admin)
-             (gnu packages base)        
-             (gnu packages commencement) 
-             (gnu packages wm)          
-             (gnu packages terminals)   
+             (gnu packages base)
+             (gnu packages commencement)
+             (gnu packages wm)
+             (gnu packages terminals)
              (gnu packages xorg)
              (gnu packages linux)
              (gnu packages video)
-             (gnu packages browsers)    ; Added for IceCat
+             (gnu packages gnuzilla)
+             (gnu packages freedesktop)
+             (gnu packages display-managers)
+             (gnu packages emacs)
              (nongnu packages linux)
              (nongnu system linux-initrd))
 
-(use-service-modules cups desktop networking ssh xorg)
+(use-service-modules desktop networking ssh xorg)
 
 (operating-system
-  (locale "en_AG.utf8")
+  (locale "C.UTF-8")
   (timezone "America/New_York")
   (keyboard-layout (keyboard-layout "us" "dvorak"))
   (host-name "guix")
@@ -22,42 +25,38 @@
   (kernel linux)
   (firmware (list linux-firmware))
   (initrd microcode-initrd)
-  
+
   (users (cons* (user-account
                   (name "xer")
-                  (comment "Xer")
+                  (comment "elixer")
                   (group "users")
                   (home-directory "/home/xer")
                   (supplementary-groups '("wheel" "netdev" "audio" "video")))
                 %base-user-accounts))
 
-  (packages (append (list 
-                          ;; The Wayland Suite (No Waybar)
-                          (specification->package "sway")
+  (packages (append (list
+                          (specification->package "hyprland")
+                          (specification->package "xdg-desktop-portal-hyprland")
+                          (specification->package "xdg-desktop-portal-gtk")
+                          (specification->package "xorg-server-xwayland")
+                          (specification->package "hyprlock")
+                          (specification->package "hypridle")
+                          (specification->package "waybar")
+                          (specification->package "rofi")
                           (specification->package "swaybg")
-                          (specification->package "swaylock")
-                          (specification->package "swayidle")
                           (specification->package "foot")
                           
-                          ;; The Browser
+                          (specification->package "emacs-pgtk")
                           (specification->package "icecat")
-                          
-                          ;; Dev Tools
                           (specification->package "make")
-                          (specification->package "binutils")
                           (specification->package "gcc-toolchain")
                           
-                          ;; Graphics / Video
                           (specification->package "libva-utils")
                           (specification->package "intel-vaapi-driver"))
                      %base-packages))
 
   (services
    (append
-    (list (service screen-locker-service-type
-                   (screen-locker-configuration
-                     (name "swaylock")
-                     (program (file-append swaylock "/bin/swaylock")))))
     %desktop-services))
 
   (bootloader (bootloader-configuration

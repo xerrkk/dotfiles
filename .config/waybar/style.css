@@ -1,0 +1,49 @@
+* {
+  font-family: "MesloLGS Nerd Font", monospace;
+  font-size: 16px;
+  border: none;
+  box-shadow: none;
+  /* Universal Text Color */
+  color: #e0def4; 
+}
+
+window#waybar {
+  background: #191724; /* base */
+}
+
+/* All modules share the base background for a seamless look */
+#custom-terminal,
+#workspaces button,
+#pulseaudio,
+#battery {
+  background: #191724; /* base */
+  padding: 0 12px;
+}
+
+/* Accent: PINE for all hover states */
+#custom-terminal:hover,
+#workspaces button:hover,
+#pulseaudio:hover,
+#battery:hover {
+  background: #31748f; /* pine */
+  color: #e0def4;
+}
+
+/* Accent: FOAM for focused/active modules */
+#workspaces button.focused,
+#pulseaudio.focused {
+  background: #9ccfd8; /* foam */
+  color: #191724;      /* dark text for contrast on teal */
+}
+
+/* Maintaining text color consistency even for warnings */
+#pulseaudio.muted,
+#battery.warning,
+#battery.critical {
+  color: #eb6f92; /* love (standardized accent for alerts) */
+  background: #191724; 
+}
+
+#workspaces button {
+  border-radius: 0;
+}

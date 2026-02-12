@@ -1,0 +1,55 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "height": 36,
+  "margin-top": 0,
+
+  "modules-left": ["hyprland/workspaces", "hyprland/window", "tray"],
+  "modules-center": ["clock"],
+  "modules-right": ["network", "pulseaudio", "battery", "custom/terminal"],
+
+  "custom/terminal": {
+    "format": "Power",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/devpower"
+  },
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5"
+    },
+    "persistent_workspaces": {
+      "*": 5
+    }
+  },
+
+  "clock": {
+    "format": "{:%a %b %d  %H:%M}",
+    "tooltip": false
+  },
+
+  "network": {
+    "format-wifi": "{essid}",
+    "format-ethernet": "{ifname}",
+    "format-disconnected": "!",
+    "tooltip": false
+  },
+
+  "pulseaudio": {
+    "format": "Volume - {volume}%",
+    "format-muted": "Volume - {volume}%",
+    "on-click": "pavucontrol"
+  },
+
+  "battery": {
+    "format": "{capacity}%",
+    "format-charging": "{capacity}%",
+    "tooltip": false
+  }
+}
+
